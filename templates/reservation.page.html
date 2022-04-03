@@ -1,0 +1,93 @@
+{{template "base" .}}
+{{define "content"}}
+<main>
+  <div class="container py-2">
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <form action="reservation.html" method="get">
+      <!-- <div class="row gx-5">
+        <div class="mb-3 col">
+          <label for="state_date" class="form-label">Choose start date</label>
+          <input required type="date" class="form-control" name="state_date" id="state_date" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3 col">
+          <label for="end_date" class="form-label">And end date</label>
+          <input required type="date" class="form-control" name="end" id="end_date">
+        </div>
+      </div> -->
+
+      <div class="row">
+        <div class="col">
+          <div class="row justify-content-center g-3" id="reservation-dates"> 
+            <div class="col-4">
+              <input required type="text" class="form-control" name="start" placeholder="Arrival">
+            </div>
+            <div class="col-4">
+              <input required type="text" class="form-control" name="end" placeholder="Departure">
+            </div>
+            <div class="col-8">
+              <button type="submit" class="btn btn-primary" id="form-btn">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </form>
+    <button type="submit" class="btn btn-primary" id="submit-btn">Submit</button>
+
+  </div>
+  
+  <div class="list-group list-group-checkable">
+    <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios1" value="" checked>
+    <label class="list-group-item py-3" for="listGroupCheckableRadios1">
+      First radio
+      <span class="d-block small opacity-50">With support text underneath to add more detail</span>
+    </label>
+  
+    <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios2" value="">
+    <label class="list-group-item py-3" for="listGroupCheckableRadios2">
+      Second radio
+      <span class="d-block small opacity-50">Some other text goes here</span>
+    </label>
+  
+    <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios3" value="">
+    <label class="list-group-item py-3" for="listGroupCheckableRadios3">
+      Third radio
+      <span class="d-block small opacity-50">And we end with another snippet of text</span>
+    </label>
+  
+    <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios4" value="" disabled>
+    <label class="list-group-item py-3" for="listGroupCheckableRadios4">
+      Fourth disabled radio
+      <span class="d-block small opacity-50">This option is disabled</span>
+    </label>
+  </div>
+  
+
+</main>
+{{end}}
