@@ -11,7 +11,7 @@
           <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
           <p>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button id="search-availability" type="button" class="btn btn-warning">
               Reservation
             </button>
           </p>
@@ -21,7 +21,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -53,37 +53,40 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
   </div>
-
-  
-  <div class="list-group list-group-checkable">
-    <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios1" value="" checked>
-    <label class="list-group-item py-3" for="listGroupCheckableRadios1">
-      First radio
-      <span class="d-block small opacity-50">With support text underneath to add more detail</span>
-    </label>
-  
-    <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios2" value="">
-    <label class="list-group-item py-3" for="listGroupCheckableRadios2">
-      Second radio
-      <span class="d-block small opacity-50">Some other text goes here</span>
-    </label>
-  
-    <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios3" value="">
-    <label class="list-group-item py-3" for="listGroupCheckableRadios3">
-      Third radio
-      <span class="d-block small opacity-50">And we end with another snippet of text</span>
-    </label>
-  
-    <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios4" value="" disabled>
-    <label class="list-group-item py-3" for="listGroupCheckableRadios4">
-      Fourth disabled radio
-      <span class="d-block small opacity-50">This option is disabled</span>
-    </label>
-  </div>
-  
 
 </main>
+{{end}}
+
+{{define "js"}}
+
+<script>
+  document.getElementById("search-availability").addEventListener('click', function(e) {
+    let html =
+    `<form action="" method="post">
+      <div class="form-row">
+        <div class="col">
+          <div class="row justify-content-center g-3" id="reservation-dates-modal"> 
+            <div class="col">
+              <input disabled required type="text" class="form-control" name="start" id="start" placeholder="Arrival">
+            </div>
+            <div class="col">
+              <input disabled required type="text" class="form-control" name="end" id="end" placeholder="Departure">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>`
+    
+      let Q = Prompt()
+      // Q.toast({title: "Q", icon: "success", position: "top-end"})
+      // Q.toast()
+      // Q.success()
+      // Q.error()
+      Q.custom('QQ', html)
+  })
+</script>
+
 {{end}}

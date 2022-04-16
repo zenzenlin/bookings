@@ -1,15 +1,17 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
 	"log"
 	"net/http"
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/zenzenlin/bookings/pkg/config"
-	"github.com/zenzenlin/bookings/pkg/handlers"
-	"github.com/zenzenlin/bookings/pkg/render"
+	"github.com/zenzenlin/bookings/internal/config"
+	"github.com/zenzenlin/bookings/internal/handlers"
+	"github.com/zenzenlin/bookings/internal/models"
+	"github.com/zenzenlin/bookings/internal/render"
 )
 const portNumber = ":8080"
 var app config.AppConfig
@@ -17,6 +19,9 @@ var session *scs.SessionManager
 
 // Home is the main application function
 func main() {
+	// what am I going to put in the session
+	gob.Register(models.Reservation{})
+	// change this to true when in production
 	app.InProduction = false
 
 	session = scs.New()

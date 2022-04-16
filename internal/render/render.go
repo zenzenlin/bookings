@@ -10,8 +10,8 @@ import (
 
 	"github.com/justinas/nosurf"
 
-	"github.com/zenzenlin/bookings/pkg/config"
-	"github.com/zenzenlin/bookings/pkg/models"
+	"github.com/zenzenlin/bookings/internal/config"
+	"github.com/zenzenlin/bookings/internal/models"
 )
 
 var functions = template.FuncMap{}
@@ -19,6 +19,9 @@ var functions = template.FuncMap{}
 var app *config.AppConfig
 
 func AddDefaultData(td *models.TemplateData, r *http.Request)*models.TemplateData {
+	td.Flash = app.Session.PopString(r.Context(), "flash")
+	td.Error = app.Session.PopString(r.Context(), "error")
+	td.Warning = app.Session.PopString(r.Context(), "warning")
 	td.CSRFToken = nosurf.Token(r)
 	return td
 }
@@ -66,7 +69,7 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 
 	for _, page := range pages {
 		name := filepath.Base(page)
-		fmt.Println("Page is currently!!!", page)
+		// fmt.Println("Page is currently!!!", page)
 		ts, err := template.New(name).Funcs(functions).ParseFiles(page)
 		if err != nil {
 			return myCache, err

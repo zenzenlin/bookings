@@ -11,7 +11,7 @@
     <!-- notie -->
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
 
-    <title>Document</title>
+    <title>Golang Hotel</title>
 
     <style>
       .bd-placeholder-img {
@@ -114,11 +114,8 @@
                 Rooms
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <!-- <li><a class="dropdown-item" href="/room">Action</a></li> -->
                 <li><a class="dropdown-item" href="/generals-quarters">General's quarters</a></li>
                 <li><a class="dropdown-item" href="/majors-suite">Major's Suite</a></li>
-                <!-- <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li> -->
               </ul>
             </li>
             <li class="nav-item"><a class="nav-link" href="/search-availability">Book Now</a></li>
@@ -139,10 +136,6 @@
     {{block "content" .}}
 
     {{end}}
-
-    {{block "js" .}}
-
-    {{end}}
     <footer class="text-muted py-5">
       <div class="container">
         <p class="float-end mb-1">
@@ -161,39 +154,12 @@
     <!-- sweetAlert -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    {{block "js" .}}
+
+    {{end}}
+
     <script>
-      document.getElementById("submit-btn").addEventListener('click', function(e) {
-        let html =
-        `<form action="" method="post">
-          <div class="form-row">
-            <div class="col">
-              <div class="row justify-content-center g-3" id="reservation-dates-modal"> 
-                <div class="col">
-                  <input disabled required type="text" class="form-control" name="start" id="start" placeholder="Arrival">
-                </div>
-                <div class="col">
-                  <input disabled required type="text" class="form-control" name="end" id="end" placeholder="Departure">
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>`
-        
-          let Q = Prompt()
-          // Q.toast({title: "Q", icon: "success", position: "top-end"})
-          // Q.toast()
-          // Q.success()
-          // Q.error()
-          Q.custom('QQ', html)
-      })
-
-      const elem = document.getElementById('reservation-dates');
-      const rangepicker = new DateRangePicker(elem, {
-        format: 'yyyy-MM-dd'
-        // ...options
-      }); 
-
-      function Alert (type, msg) {
+      function Alert (msg, type) {
         notie.alert({
           type: type,
           text: msg,
@@ -208,6 +174,18 @@
           confirmButtonText: confirmButtonText
         })
       }
+
+      {{with .Error}}
+      Alert("{{.}}", "error")
+      {{end}}
+
+      {{with .Flash}}
+      Alert("{{.}}", "success")
+      {{end}}
+
+      {{with .Warning}}
+      Alert("{{.}}", "warning")
+      {{end}}
 
       function Prompt () {
         let toast = function (title = "QQ", icon = "success", position = "top-end") {
@@ -245,19 +223,17 @@
           })
         }
 
-        async function custom(title = "custom", html) {
-          const { value: formValues } = await Swal.fire({
+        async function custom(title = "custom", html, willOpen, didOpen, callBack) {
+          const { value: result } = await Swal.fire({
             title: title,
             html: html,
             backdrop: false,
             focusConfirm: false,
             showCancelButton: true,
             willOpen: () => {
-              const elem = document.getElementById('reservation-dates-modal')
-              const rp = new DateRangePicker(elem, {
-                format: 'yyyy-MM-dd',
-                showOnFocus: true,
-              })
+              if(willOpen !== undefined) {
+                willOpen()
+              }
             },
             preConfirm: () => {
               return [
@@ -266,13 +242,25 @@
               ]
             },
             didOpen: () => {
-              document.getElementById('start').removeAttribute('disabled')
-              document.getElementById('end').removeAttribute('disabled')
+              if(didOpen !== undefined) {
+                didOpen()
+              }
             }
           })
 
-          if (formValues) {
-            Swal.fire(JSON.stringify(formValues))
+          if (result) {
+            if (result.dismiss !== Swal.DismissReason.cancel) {
+              if (result.value !== "") {
+                if (callBack !== undefined) {
+                  callBack(result)
+                }
+              } else {
+                callBack(false)
+              }
+            } else {
+              c.callBack(false)
+            }
+            // Swal.fire(JSON.stringify(formValues))
           }
         }
 

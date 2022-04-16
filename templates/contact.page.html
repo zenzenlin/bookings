@@ -1,19 +1,6 @@
 {{template "base" .}}
 {{define "content"}}
 <div>
-  <h1>This is about page</h1>
-  <p>QQ</p>
-  <p>QQQQQQQ</p>
-
-  <p>This came from the template: {{index .StringMap "test"}}</p>
-  <p>{{index .StringMap "test"}}</p>
-
-  <p>
-    {{if ne (index .StringMap "remote_ip") ""}}
-      Your remote IP is {{index .StringMap "remote_ip"}}
-    {{else}}
-      I don't know your id address yet. Visit the <a href="/">Home page</a> so I can set it.
-    {{end}}
-  </p>
+  <h1>This is CONTACT page</h1>
 </div>
 {{end}}
